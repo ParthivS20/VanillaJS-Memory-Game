@@ -1,4 +1,4 @@
-const numCards = 12
+const numCards = 6
 
 const cardTypes = ["ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king"]
 const suites = ["clubs", "diamonds", "hearts", "spades"]
@@ -101,8 +101,8 @@ function checkForMatch() {
     if (firstCard.dataset.card === secondCard.dataset.card) {
         disableCards()
 
-        numMatches += 2
-        if(numMatches >= numCards) {
+        numMatches++
+        if(numMatches >= numCards / 2) {
             gameTime = Date.now() - startTime
             lockBoard = true
 
@@ -148,22 +148,15 @@ function gameOver() {
 }
 
 function showModal() {
-    let modal = document.getElementById("modal")
-    modal.style.display = 'block';
-    setTimeout(function () {
-        modal.style.top = '0';
-    }, 10);
+    document.getElementById("modal").style.display = 'flex';
 }
 
 function hideModal() {
-    let modal = document.getElementById("modal")
-    modal.style.top = '-100%';
-    setTimeout(function () {
-        modal.style.display = 'none';
-    }, 300);
+    document.getElementById("modal").style.display = 'none';
 }
 
 function convertMilliseconds(milliseconds) {
+    console.log(milliseconds)
     let minutes = Math.floor(milliseconds / 60000);
     let seconds = ((milliseconds % 60000) / 1000).toFixed(0);
 
