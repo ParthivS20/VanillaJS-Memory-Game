@@ -102,8 +102,8 @@ function checkForMatch() {
     if (firstCard.dataset.card === secondCard.dataset.card) {
         disableCards()
 
-        numMatches += 2
-        if(numMatches >= numCards) {
+        numMatches++
+        if(numMatches >= numCards / 2) {
             stopTimer()
             lockBoard = true
 
@@ -174,8 +174,8 @@ function startTimer() {
 }
 
 function stopTimer() {
+    gameTime = Date.now() - startTime
     clearInterval(timerLog)
     console.log("Stopping Timer")
-    gameTime = Date.now() - startTime
     startTime = -1
 }
