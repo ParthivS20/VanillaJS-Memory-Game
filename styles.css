@@ -90,9 +90,6 @@ body {
     justify-content: center;
     align-items: center;
     gap: 8px;
-
-    top: -1000px;
-    left: 0;
 }
 
 .game-over-modal h1 {

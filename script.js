@@ -1,4 +1,4 @@
-const numCards = 6
+const numCards = 12
 
 const cardTypes = ["ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king"]
 const suites = ["clubs", "diamonds", "hearts", "spades"]
@@ -37,6 +37,8 @@ let lockBoard = false
 let firstCardFlipped = false
 let firstCard, secondCard
 
+let timerLog
+
 initBoard()
 
 function initBoard() {
@@ -44,7 +46,6 @@ function initBoard() {
     getCardImages()
     numMatches = 0
     numTries = 0
-    startTime = -1
 
     cards.forEach((card, i) => {
         card.classList.remove("flip")
@@ -83,7 +84,7 @@ function flipCard() {
     if (lockBoard) return
     if (this === firstCard) return
 
-    if (startTime === -1) startTime = Date.now()
+    if (startTime === -1) startTimer()
     this.classList.add('flip')
 
     if (!firstCardFlipped) {
@@ -101,9 +102,9 @@ function checkForMatch() {
     if (firstCard.dataset.card === secondCard.dataset.card) {
         disableCards()
 
-        numMatches++
-        if(numMatches >= numCards / 2) {
-            gameTime = Date.now() - startTime
+        numMatches += 2
+        if(numMatches >= numCards) {
+            stopTimer()
             lockBoard = true
 
             setTimeout(() => {
@@ -156,11 +157,25 @@ function hideModal() {
 }
 
 function convertMilliseconds(milliseconds) {
-    console.log(milliseconds)
     let minutes = Math.floor(milliseconds / 60000);
     let seconds = ((milliseconds % 60000) / 1000).toFixed(0);
 
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
     return minutes + 'm ' + seconds + 's';
+}
+
+function startTimer() {
+    startTime = Date.now()
+    console.log("Starting Timer")
+    timerLog = setInterval(() => {
+        console.log(Date.now() - startTime)
+    }, 1000)
+}
+
+function stopTimer() {
+    clearInterval(timerLog)
+    console.log("Stopping Timer")
+    gameTime = Date.now() - startTime
+    startTime = -1
 }
